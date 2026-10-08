@@ -59,11 +59,11 @@ body {
 	width: 100%;
 	max-width: calc(var(--measure) + var(--gutter) * 2);
 	margin: 0 auto;
-	padding: 0 var(--gutter);
+	padding-inline: var(--gutter);
 }
 
 main {
-	padding: 3.5rem 0 4rem;
+	padding-block: 3.5rem 4rem;
 }
 
 /* Type scale: 1.25 ratio from a 20px base */
@@ -259,7 +259,7 @@ th {
 		font-size: 2rem;
 	}
 	main {
-		padding-top: 2.5rem;
+		padding-block-start: 2.5rem;
 	}
 	.post-list li {
 		grid-template-columns: 1fr;
