@@ -1,0 +1,16 @@
+---
+import AboutHeroImage from '../assets/blog-placeholder-about.jpg';
+import Layout from '../layouts/BlogPost.astro';
+---
+
+<Layout
+	title="About Me"
+	description="About Ethan"
+	pubDate={new Date('October 08 2026')}
+	heroImage={AboutHeroImage}
+>
+	<p>
+		I’m Ethan, a software engineer working mostly in PHP, Laravel, MySQL, and AWS. Edit this page
+		in <code>src/pages/about.astro</code> to say more about yourself.
+	</p>
+</Layout>
