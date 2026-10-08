@@ -1,14 +1,13 @@
 ---
-import { getCollection } from 'astro:content';
 import BaseHead from '../../components/BaseHead.astro';
 import Footer from '../../components/Footer.astro';
 import Header from '../../components/Header.astro';
 import PostList from '../../components/PostList.astro';
 import { SITE_TITLE } from '../../consts';
+import { getPosts, tagCounts } from '../../utils/posts';
 
-const posts = (await getCollection('blog')).sort(
-	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-);
+const posts = await getPosts();
+const hasTags = tagCounts(posts).length > 0;
 
 // Group posts by year, newest first
 const byYear = new Map<number, typeof posts>();
@@ -17,6 +16,7 @@ for (const post of posts) {
 	if (!byYear.has(year)) byYear.set(year, []);
 	byYear.get(year)!.push(post);
 }
+const years = [...byYear.keys()];
 ---
 
 <!doctype html>
@@ -24,6 +24,16 @@ for (const post of posts) {
 	<head>
 		<BaseHead title={`Writing | ${SITE_TITLE}`} description="Everything I’ve written, newest first." />
 		<style>
+			.intro {
+				color: var(--muted);
+				margin-bottom: 1.5rem;
+			}
+			.jump {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0.4rem 1.1rem;
+				margin: 0 0 2.5rem;
+			}
 			h2 {
 				font-family: var(--sans);
 				font-size: 0.85rem;
@@ -31,6 +41,7 @@ for (const post of posts) {
 				color: var(--muted);
 				letter-spacing: 0.02em;
 				margin: 0 0 0.4rem;
+				scroll-margin-top: 1.5rem;
 			}
 		</style>
 	</head>
@@ -38,10 +49,23 @@ for (const post of posts) {
 		<Header />
 		<main class="wrap">
 			<h1>Writing</h1>
+			<p class="intro">
+				Everything I’ve written, newest first. You can also follow along by <a href="/rss.xml">RSS</a
+				>{hasTags && <>, or browse by <a href="/tags/">topic</a></>}.
+			</p>
+			{
+				years.length > 1 && (
+					<nav class="jump meta" aria-label="Jump to year">
+						{years.map((year) => (
+							<a href={`#y${year}`}>{year}</a>
+						))}
+					</nav>
+				)
+			}
 			{
 				[...byYear].map(([year, yearPosts]) => (
-					<section aria-label={`${year}`}>
-						<h2>{year}</h2>
+					<section aria-labelledby={`y${year}`}>
+						<h2 id={`y${year}`}>{year}</h2>
 						<PostList posts={yearPosts} dateFormat="short" />
 					</section>
 				))

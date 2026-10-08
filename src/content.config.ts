@@ -14,6 +14,10 @@ const blog = defineCollection({
 			pubDate: z.coerce.date(),
 			updatedDate: z.coerce.date().optional(),
 			heroImage: z.optional(image()),
+			// Optional topic tags, e.g. ['laravel', 'aws']
+			tags: z.array(z.string()).default([]),
+			// Set true to list this post under "Start here" on the homepage
+			featured: z.boolean().default(false),
 		}),
 });
 

@@ -28,9 +28,13 @@ title: 'My post title'
 description: 'One-line summary for the list page and link previews.'
 pubDate: 'Oct 10 2026'
 # heroImage: '../../assets/my-image.jpg'   # optional
+# tags: ['laravel', 'aws']                  # optional; builds /tags/ pages
+# featured: true                            # optional; lists it under "Start here" on the homepage
 ---
 
-Post body in Markdown.
+Post body in Markdown. Footnotes work too.[^1]
+
+[^1]: Like this.
 ```
 
 Commit and push to `master`. The site rebuilds automatically.
@@ -58,7 +62,7 @@ npm run build    # production build into ./dist
 | Colors & fonts | `src/styles/global.css` |
 | Deploy pipeline | `.github/workflows/deploy.yml` |
 
-RSS is at `/rss.xml` and a sitemap is generated automatically.
+RSS is at `/rss.xml`, topics are at `/tags/`, and a sitemap is generated automatically.
 
 ## Custom domain later
 

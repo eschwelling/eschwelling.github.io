@@ -1,0 +1,52 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Footer from '../../components/Footer.astro';
+import Header from '../../components/Header.astro';
+import { SITE_TITLE } from '../../consts';
+import { getPosts, tagCounts } from '../../utils/posts';
+
+const tags = tagCounts(await getPosts());
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={`Topics | ${SITE_TITLE}`} description="Writing grouped by topic." />
+		<style>
+			.tag-cloud {
+				list-style: none;
+				padding: 0;
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0.6rem 1.4rem;
+			}
+			.tag-cloud li {
+				margin: 0;
+			}
+			.count {
+				margin-left: 0.3rem;
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main class="wrap">
+			<h1>Topics</h1>
+			{
+				tags.length === 0 ? (
+					<p>No topics yet. Add <code>tags</code> to a post’s frontmatter to start grouping posts.</p>
+				) : (
+					<ul class="tag-cloud">
+						{tags.map(({ tag, slug, count }) => (
+							<li>
+								<a href={`/tags/${slug}/`}>{tag}</a>
+								<span class="meta count">{count}</span>
+							</li>
+						))}
+					</ul>
+				)
+			}
+		</main>
+		<Footer />
+	</body>
+</html>

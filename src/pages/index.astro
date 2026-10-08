@@ -1,14 +1,14 @@
 ---
-import { getCollection } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import PostList from '../components/PostList.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import { getPosts } from '../utils/posts';
 
-const posts = (await getCollection('blog'))
-	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-	.slice(0, 5);
+const posts = await getPosts();
+const featured = posts.filter((p) => p.data.featured);
+const recent = posts.slice(0, 5);
 ---
 
 <!doctype html>
@@ -50,9 +50,20 @@ const posts = (await getCollection('blog'))
 				</p>
 			</div>
 
-			<h2>Recent writing</h2>
-			<PostList posts={posts} />
-			<p class="all"><a href="/blog">All writing</a></p>
+			{
+				featured.length > 0 && (
+					<section aria-labelledby="start-here">
+						<h2 id="start-here">Start here</h2>
+						<PostList posts={featured} />
+					</section>
+				)
+			}
+
+			<section aria-labelledby="recent">
+				<h2 id="recent">Recent writing</h2>
+				<PostList posts={recent} />
+				<p class="all"><a href="/blog">All writing</a></p>
+			</section>
 		</main>
 		<Footer />
 	</body>

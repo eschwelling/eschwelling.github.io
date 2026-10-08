@@ -297,3 +297,53 @@ th {
 		background-color: var(--shiki-dark-bg) !important;
 	}
 }
+
+/* Long words break cleanly on narrow screens */
+@media (max-width: 34rem) {
+	.prose p,
+	.prose li {
+		hyphens: auto;
+		-webkit-hyphens: auto;
+	}
+}
+
+/* Footnotes (Markdown [^1] syntax) */
+.prose sup a[data-footnote-ref] {
+	font-family: var(--sans);
+	font-size: 0.7rem;
+	font-weight: 600;
+	text-decoration: none;
+	padding: 0 0.15em;
+}
+.prose sup a[data-footnote-ref]::before {
+	content: '[';
+}
+.prose sup a[data-footnote-ref]::after {
+	content: ']';
+}
+.prose .footnotes {
+	margin-top: 3rem;
+	padding-top: 1rem;
+	border-top: 1px solid var(--rule);
+	font-size: 0.95rem;
+	line-height: 1.55;
+	color: var(--muted);
+}
+.prose .footnotes ol {
+	padding-left: 1.2rem;
+}
+.prose .footnotes p {
+	margin-bottom: 0.5rem;
+}
+.prose [data-footnote-backref] {
+	text-decoration: none;
+	margin-left: 0.25rem;
+}
+.prose :target {
+	scroll-margin-top: 1.5rem;
+}
+.prose li:target,
+.prose sup:target a {
+	background: var(--accent-soft);
+	border-radius: 2px;
+}
