@@ -1,24 +1,58 @@
 ---
+import { getCollection } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
+import PostList from '../components/PostList.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+
+const posts = (await getCollection('blog'))
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+	.slice(0, 5);
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<style>
+			.lede {
+				font-size: 1.6rem;
+				line-height: 1.4;
+				letter-spacing: -0.01em;
+				margin-bottom: 3.5rem;
+				text-wrap: pretty;
+			}
+			.lede p {
+				margin: 0 0 1rem;
+			}
+			h2 {
+				margin-top: 0;
+			}
+			.all {
+				font-family: var(--sans);
+				font-size: 0.85rem;
+			}
+			@media (max-width: 34rem) {
+				.lede {
+					font-size: 1.35rem;
+				}
+			}
+		</style>
 	</head>
 	<body>
 		<Header />
-		<main>
-			<h1>Hi, I’m Ethan.</h1>
-			<p>
-				I’m a software engineer. This is where I write about the things I’m
-				building, learning, and tinkering with.
-			</p>
-			<p><a href="/blog">Read the blog →</a></p>
+		<main class="wrap">
+			<div class="lede">
+				<p>
+					I’m Ethan, a software engineer. I write here about the things I’m building, learning, and
+					tinkering with.
+				</p>
+			</div>
+
+			<h2>Recent writing</h2>
+			<PostList posts={posts} />
+			<p class="all"><a href="/blog">All writing</a></p>
 		</main>
 		<Footer />
 	</body>

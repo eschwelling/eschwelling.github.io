@@ -1,15 +1,18 @@
 ---
 interface Props {
 	date: Date;
+	/** "long" = Oct 8, 2026; "short" = Oct 8 (used inside year groups) */
+	format?: 'long' | 'short';
 }
 
-const { date } = Astro.props;
+const { date, format = 'long' } = Astro.props;
 ---
 
 <time datetime={date.toISOString()}>
 	{date.toLocaleDateString('en-us', {
-		year: 'numeric',
+		year: format === 'long' ? 'numeric' : undefined,
 		month: 'short',
 		day: 'numeric',
+		timeZone: 'UTC',
 	})}
 </time>

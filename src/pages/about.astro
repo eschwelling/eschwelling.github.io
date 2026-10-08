@@ -1,16 +1,29 @@
 ---
-import AboutHeroImage from '../assets/blog-placeholder-about.jpg';
-import Layout from '../layouts/BlogPost.astro';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { SITE_TITLE } from '../consts';
 ---
 
-<Layout
-	title="About Me"
-	description="About Ethan"
-	pubDate={new Date('October 08 2026')}
-	heroImage={AboutHeroImage}
->
-	<p>
-		I’m Ethan, a software engineer working mostly in PHP, Laravel, MySQL, and AWS. Edit this page
-		in <code>src/pages/about.astro</code> to say more about yourself.
-	</p>
-</Layout>
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={`About | ${SITE_TITLE}`} description="About Ethan." />
+	</head>
+	<body>
+		<Header />
+		<main class="wrap">
+			<h1>About</h1>
+			<p>
+				I’m Ethan, a software engineer working mostly in PHP, Laravel, MySQL, and AWS.
+			</p>
+			<p>
+				This page lives in <code>src/pages/about.astro</code>. Edit it to say more about yourself.
+			</p>
+			<p>
+				Elsewhere: <a href="https://github.com/eschwelling">GitHub</a>.
+			</p>
+		</main>
+		<Footer />
+	</body>
+</html>

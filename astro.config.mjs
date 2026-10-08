@@ -8,28 +8,29 @@ import { defineConfig, fontProviders } from 'astro/config';
 export default defineConfig({
 	site: 'https://eschwelling.github.io',
 	integrations: [mdx(), sitemap()],
+	markdown: {
+		shikiConfig: {
+			themes: { light: 'github-light', dark: 'github-dark' },
+		},
+	},
 	fonts: [
 		{
-			provider: fontProviders.local(),
-			name: 'Atkinson',
-			cssVariable: '--font-atkinson',
+			provider: fontProviders.google(),
+			name: 'Newsreader',
+			cssVariable: '--font-serif',
+			weights: [400, 500, 600],
+			styles: ['normal', 'italic'],
+			subsets: ['latin'],
+			fallbacks: ['Georgia', 'serif'],
+		},
+		{
+			provider: fontProviders.google(),
+			name: 'Public Sans',
+			cssVariable: '--font-sans',
+			weights: [400, 600],
+			styles: ['normal'],
+			subsets: ['latin'],
 			fallbacks: ['sans-serif'],
-			options: {
-				variants: [
-					{
-						src: ['./src/assets/fonts/atkinson-regular.woff'],
-						weight: 400,
-						style: 'normal',
-						display: 'swap',
-					},
-					{
-						src: ['./src/assets/fonts/atkinson-bold.woff'],
-						weight: 700,
-						style: 'normal',
-						display: 'swap',
-					},
-				],
-			},
 		},
 	],
 });
